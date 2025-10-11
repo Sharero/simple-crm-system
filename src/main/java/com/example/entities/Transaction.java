@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import com.example.controllers.dto.PaymentType;
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -22,13 +23,14 @@ public class Transaction {
     @Column(name = "amount")
     private Double amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "payment_type")
-    private String paymentType;
+    private PaymentType paymentType;
 
     @Column(name = "transaction_date")
     private LocalDateTime transactionDate;
 
-    public Transaction(Seller seller, Double amount, String paymentType) {
+    public Transaction(Seller seller, Double amount, PaymentType paymentType) {
         this.seller = seller;
         this.amount = amount;
         this.paymentType = paymentType;
