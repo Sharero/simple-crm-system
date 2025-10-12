@@ -5,9 +5,12 @@ import com.example.controllers.dto.responses.TopSellerResponse;
 import com.example.entities.Seller;
 import com.example.services.SellerService;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -51,12 +54,26 @@ public class SellerController {
         sellerService.deleteSeller(id);
     }
 
-    @PostMapping("/top-seller")
-    public ResponseEntity<TopSellerResponse> findTopSellerByAmount(@RequestBody TopSellerRequest topSellerRequest) {
-        TopSellerResponse seller = sellerService.findTopSellerByAmount(topSellerRequest);
+    @GetMapping("/top-seller")
+    public ResponseEntity<TopSellerResponse> findTopSellerByAmount(@RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+                                                                   @RequestParam("end")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+        TopSellerResponse seller = sellerService.findTopSellerByAmount(start, end);
         if (seller == null) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(seller);
+    }
+
+    @GetMapping("/sellers-below")
+    public ResponseEntity<List<TopSellerResponse>> getSellersBelow(
+            @RequestParam("start") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam("end")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @RequestParam("limit") BigDecimal limit) {
+
+        List<TopSellerResponse> list = sellerService.findSellersWithTotalLessThan(start, end, limit);
+        if (list.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(list);
     }
 }

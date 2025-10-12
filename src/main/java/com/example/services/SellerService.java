@@ -7,12 +7,13 @@ import com.example.repositories.SellerRepository;
 
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class SellerService {
@@ -46,9 +47,10 @@ public class SellerService {
         sellerRepository.deleteById(id);
     }
 
-    public TopSellerResponse findTopSellerByAmount(TopSellerRequest topSellerRequest) {
-        Timestamp startTs = toTimestamp(topSellerRequest.getStartPeriod());
-        Timestamp endTs = toTimestamp(topSellerRequest.getEndPeriod());
+    public TopSellerResponse findTopSellerByAmount(LocalDateTime start,
+                                                   LocalDateTime end) {
+        Timestamp startTs = toTimestamp(start);
+        Timestamp endTs = toTimestamp(end);
 
         List<Object[]> rows = sellerRepository.findTopSellerByAmount(startTs, endTs);
 
@@ -75,8 +77,57 @@ public class SellerService {
         return new TopSellerResponse(seller, total);
     }
 
-    private Timestamp toTimestamp(java.time.LocalDateTime ldt) {
+    public List<TopSellerResponse> findSellersWithTotalLessThan(LocalDateTime start,
+                                                                LocalDateTime end,
+                                                                BigDecimal limit) {
+        Timestamp startTs = toTimestamp(start);
+        Timestamp endTs = toTimestamp(end);
+
+        List<Object[]> rows = sellerRepository.findSellersWithTotalLessThan(startTs, endTs, limit);
+
+        List<Integer> ids = rows.stream()
+                .map(r -> {
+                    Object idObj = r[0];
+                    if (idObj instanceof Number) return ((Number) idObj).intValue();
+                    return Integer.parseInt(Objects.toString(idObj));
+                })
+                .collect(Collectors.toList());
+
+        List<Seller> sellers = sellerRepository.findAllById(ids);
+        Map<Integer, Seller> sellerMap = sellers.stream()
+                .collect(Collectors.toMap(Seller::getId, s -> s));
+
+        List<TopSellerResponse> result = new ArrayList<>(rows.size());
+        for (Object[] row : rows) {
+            Integer id = (row[0] instanceof Number) ? ((Number) row[0]).intValue() : Integer.parseInt(Objects.toString(row[0]));
+            Object totalObj = row.length > 1 ? row[1] : null;
+
+            Double total = null;
+            if (totalObj != null) {
+                if (totalObj instanceof Number) total = ((Number) totalObj).doubleValue();
+                else if (totalObj instanceof BigDecimal) total = ((BigDecimal) totalObj).doubleValue();
+                else total = Double.parseDouble(totalObj.toString());
+            } else {
+                total = 0.0;
+            }
+
+            Seller seller = sellerMap.get(id);
+            if (seller != null) {
+                result.add(new TopSellerResponse(seller, total));
+            } else {
+                Seller stub = new Seller();
+                stub.setId(id);
+                result.add(new TopSellerResponse(stub, total));
+            }
+        }
+
+        return result;
+    }
+
+    private Timestamp toTimestamp(LocalDateTime ldt) {
         ZonedDateTime zdt = ldt.atZone(ZONE);
         return Timestamp.from(zdt.toInstant());
     }
+
+
 }
