@@ -8,18 +8,18 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Repository
 public interface SellerRepository extends JpaRepository<Seller, Integer> {
 
-    @Query(value = ""
-            + "SELECT s.* "
-            + "FROM sellers s "
-            + "JOIN transactions t ON t.seller = s.id "
-            + "WHERE t.transaction_date >= :start AND t.transaction_date < :end "
-            + "GROUP BY s.id "
-            + "ORDER BY SUM(t.amount) DESC "
-            + "LIMIT 1",
+    @Query(value =
+            "SELECT s.id AS seller_id, SUM(t.amount) AS total " +
+                    "FROM transactions t " +
+                    "JOIN sellers s ON t.seller = s.id " +
+                    "WHERE t.transaction_date >= :start AND t.transaction_date <= :end " +
+                    "GROUP BY s.id " +
+                    "ORDER BY total DESC ",
             nativeQuery = true)
-    Seller findTopSellerByAmount(@Param("start") Timestamp start, @Param("end") Timestamp end);
+    List<Object[]> findTopSellerByAmount(@Param("start") Timestamp start, @Param("end") Timestamp end);
 }

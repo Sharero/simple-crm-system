@@ -52,10 +52,10 @@ public class SellerController {
     }
 
     @PostMapping("/top-seller")
-    public ResponseEntity<Seller> getTopSeller(@RequestBody TopSellerRequest topSellerRequest) {
-        Seller seller = sellerService.findTopSellerByAmount(topSellerRequest);
+    public ResponseEntity<TopSellerResponse> findTopSellerByAmount(@RequestBody TopSellerRequest topSellerRequest) {
+        TopSellerResponse seller = sellerService.findTopSellerByAmount(topSellerRequest);
         if (seller == null) {
-            return ResponseEntity.noContent().build(); // или ResponseEntity.notFound().build() по твоему выбору
+            return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(seller);
     }

@@ -1,6 +1,7 @@
 package com.example.services;
 
 import com.example.controllers.dto.requests.TopSellerRequest;
+import com.example.controllers.dto.responses.TopSellerResponse;
 import com.example.entities.Seller;
 import com.example.repositories.SellerRepository;
 
@@ -45,12 +46,33 @@ public class SellerService {
         sellerRepository.deleteById(id);
     }
 
-    public Seller findTopSellerByAmount(TopSellerRequest topSellerRequest) {
+    public TopSellerResponse findTopSellerByAmount(TopSellerRequest topSellerRequest) {
         Timestamp startTs = toTimestamp(topSellerRequest.getStartPeriod());
         Timestamp endTs = toTimestamp(topSellerRequest.getEndPeriod());
 
-        Seller top = sellerRepository.findTopSellerByAmount(startTs, endTs);
-        return top;
+        List<Object[]> rows = sellerRepository.findTopSellerByAmount(startTs, endTs);
+
+        Object[] row = rows.get(0);
+        Object idObj = row[0];
+        Object totalObj = row.length > 1 ? row[1] : null;
+
+        Integer sellerId;
+        if (idObj instanceof Number) {
+            sellerId = ((Number) idObj).intValue();
+        } else {
+            sellerId = Integer.parseInt(idObj.toString());
+        }
+
+        Double total = null;
+        if (totalObj != null) {
+            if (totalObj instanceof Number) total = ((Number) totalObj).doubleValue();
+            else total = Double.parseDouble(totalObj.toString());
+        }
+
+        Optional<Seller> sellerOpt = sellerRepository.findById(sellerId);
+
+        Seller seller = sellerOpt.get();
+        return new TopSellerResponse(seller, total);
     }
 
     private Timestamp toTimestamp(java.time.LocalDateTime ldt) {

@@ -1,20 +1,18 @@
 package com.example.controllers.dto.responses;
 
+import com.example.entities.Seller;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class TopSellerResponse {
-    private int id;
-
-    private String name;
+    private Seller seller;
 
     private Double totalAmount;
 
-    public TopSellerResponse(int id, String name, Double totalAmount) {
-        this.id = id;
-        this.name = name;
+    public TopSellerResponse(Seller seller, Double totalAmount) {
+        this.seller = seller;
         this.totalAmount = totalAmount;
     }
 }
