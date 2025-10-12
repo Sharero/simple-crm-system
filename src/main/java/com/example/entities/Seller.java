@@ -13,25 +13,25 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Seller {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @Column(name = "name")
-    private String name;
+  @Column(name = "name")
+  private String name;
 
-    @Column(name = "contact_info")
-    private String contactInfo;
+  @Column(name = "contact_info")
+  private String contactInfo;
 
-    @Column(name = "registration_date")
-    private LocalDateTime registrationDate;
+  @Column(name = "registration_date")
+  private LocalDateTime registrationDate;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "seller")
-    private List<Transaction> transactions;
+  @JsonIgnore
+  @OneToMany(mappedBy = "seller")
+  private List<Transaction> transactions;
 
-    public Seller(String name, String contactInfo) {
-        this.name = name;
-        this.contactInfo = contactInfo;
-    }
+  public Seller(String name, String contactInfo) {
+    this.name = name;
+    this.contactInfo = contactInfo;
+  }
 }

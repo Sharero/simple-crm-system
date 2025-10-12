@@ -1,6 +1,6 @@
 package com.example.entities;
 
-import com.example.controllers.dto.PaymentType;
+import com.example.dto.PaymentType;
 import lombok.*;
 import jakarta.persistence.*;
 
@@ -12,27 +12,27 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class Transaction {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @ManyToOne()
-    @JoinColumn(name = "seller", referencedColumnName = "id")
-    private Seller seller;
+  @ManyToOne()
+  @JoinColumn(name = "seller", referencedColumnName = "id")
+  private Seller seller;
 
-    @Column(name = "amount")
-    private Double amount;
+  @Column(name = "amount")
+  private Double amount;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "payment_type")
-    private PaymentType paymentType;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "payment_type")
+  private PaymentType paymentType;
 
-    @Column(name = "transaction_date")
-    private LocalDateTime transactionDate;
+  @Column(name = "transaction_date")
+  private LocalDateTime transactionDate;
 
-    public Transaction(Seller seller, Double amount, PaymentType paymentType) {
-        this.seller = seller;
-        this.amount = amount;
-        this.paymentType = paymentType;
-    }
+  public Transaction(Seller seller, Double amount, PaymentType paymentType) {
+    this.seller = seller;
+    this.amount = amount;
+    this.paymentType = paymentType;
+  }
 }
