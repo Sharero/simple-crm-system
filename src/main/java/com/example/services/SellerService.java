@@ -49,9 +49,6 @@ public class SellerService {
     if (seller == null) {
       throw new IllegalArgumentException("seller must not be null");
     }
-    if (seller.getId() == 0) {
-      throw new IllegalArgumentException("id is required");
-    }
     if (seller.getName() == null) {
       throw new IllegalArgumentException("name is required");
     }

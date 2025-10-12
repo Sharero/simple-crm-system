@@ -1,0 +1,318 @@
+{
+	"info": {
+		"_postman_id": "22fb227f-2a8f-414f-91e7-9276a4876900",
+		"name": "Shift",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49177120",
+		"_collection_link": "https://yaroslav-sumin225-5882485.postman.co/workspace/%D0%AF%D1%80%D0%BE%D1%81%D0%BB%D0%B0%D0%B2-%D0%A1%D1%83%D0%BC%D0%B8%D0%BD's-Workspace~45cb0c8b-eaf3-40a7-886e-d411c494c1a2/collection/49177120-22fb227f-2a8f-414f-91e7-9276a4876900?action=share&source=collection_link&creator=49177120"
+	},
+	"item": [
+		{
+			"name": "Seller",
+			"item": [
+				{
+					"name": "Список всех продавцов",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/sellers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Инфо о конкретном продавце",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/sellers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создать нового продавца",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\",\r\n    \"contactInfo\": \"test@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/sellers",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Обновить инфо о продавце",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"test\",\r\n    \"contactInfo\": \"test@test.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/sellers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Удалить продавца",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/sellers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить самого продуктивного продавца",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/sellers/top-seller?start=2025-10-11T21:48:04.111123&end=2025-10-12T20:18:34.494674",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers",
+								"top-seller"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "2025-10-11T21:48:04.111123"
+								},
+								{
+									"key": "end",
+									"value": "2025-10-12T20:18:34.494674"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить список продавцов с суммой меньше указанной",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/sellers/sellers-below?start=2025-10-11T21:48:04.111123&end=2025-10-12T20:18:34.494674&limit=500",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"sellers",
+								"sellers-below"
+							],
+							"query": [
+								{
+									"key": "start",
+									"value": "2025-10-11T21:48:04.111123"
+								},
+								{
+									"key": "end",
+									"value": "2025-10-12T20:18:34.494674"
+								},
+								{
+									"key": "limit",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Получить список всех транзакций",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/transactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить информацию о конкретной транзакции",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/transactions/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"transactions",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Создать новую транзакцию",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"sellerId\": 1,\r\n  \"amount\": 100,\r\n  \"paymentType\": \"CASH\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/transactions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получить все транзакции продавца",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/transactions/sellers/1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"transactions",
+								"sellers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:8080/"
+		}
+	]
+}
