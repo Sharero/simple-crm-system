@@ -1,6 +1,6 @@
 package com.example.controllers;
 
-import com.example.controllers.dto.TransactionRequest;
+import com.example.controllers.dto.requests.TransactionRequest;
 import com.example.entities.Transaction;
 import com.example.services.TransactionService;
 

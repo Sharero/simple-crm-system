@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import com.example.controllers.dto.requests.TopSellerRequest;
+import com.example.controllers.dto.responses.TopSellerResponse;
 import com.example.entities.Seller;
 import com.example.services.SellerService;
 
@@ -47,5 +49,14 @@ public class SellerController {
     @DeleteMapping("/{id}")
     public void deleteSeller(@PathVariable int id) {
         sellerService.deleteSeller(id);
+    }
+
+    @PostMapping("/top-seller")
+    public ResponseEntity<Seller> getTopSeller(@RequestBody TopSellerRequest topSellerRequest) {
+        Seller seller = sellerService.findTopSellerByAmount(topSellerRequest);
+        if (seller == null) {
+            return ResponseEntity.noContent().build(); // или ResponseEntity.notFound().build() по твоему выбору
+        }
+        return ResponseEntity.ok(seller);
     }
 }

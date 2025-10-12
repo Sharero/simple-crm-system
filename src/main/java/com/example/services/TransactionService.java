@@ -4,7 +4,7 @@ import com.example.repositories.SellerRepository;
 import com.example.repositories.TransactionRepository;
 import com.example.entities.Transaction;
 import com.example.entities.Seller;
-import com.example.controllers.dto.TransactionRequest;
+import com.example.controllers.dto.requests.TransactionRequest;
 
 import org.springframework.stereotype.Service;
 

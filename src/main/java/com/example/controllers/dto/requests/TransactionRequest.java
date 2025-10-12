@@ -1,5 +1,6 @@
-package com.example.controllers.dto;
+package com.example.controllers.dto.requests;
 
+import com.example.controllers.dto.PaymentType;
 import jakarta.validation.constraints.*;
 
 import lombok.Getter;
